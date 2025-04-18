@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./main.js" type="module" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Fetch Exercice</title>
+</head>
+<body>
+    <main>
+        <h1>API POKEMON</h1>
+        <form action="POST">
+            <label for="name">nom du pokemon</label>
+            <input type="text" id="name">
+            <button type="submit">fetch</button>  
+        </form>
+        <table>
+            <thead>
+                <tr>ID</tr>
+                <tr>Nom</tr>
+                <tr>Poids</tr>
+                <tr>Taille</tr>
+                <tr>Type</tr>  
+                <tr>Pouvoirs</tr> 
+            </thead>
+            <tbody id="tableBody">
+                
+            </tbody>
+        </table>
+</body>
+</html>
