@@ -10,23 +10,35 @@
 <body>
     <main>
         <h1>API POKEMON</h1>
-        <form action="POST">
+        <form id="form1" action="POST">
             <label for="name">nom du pokemon</label>
             <input type="text" id="name">
-            <button type="submit">fetch</button>  
+            <button type="submit">fetch nom</button>  
         </form>
-        <table>
-            <thead>
-                <tr>ID</tr>
-                <tr>Nom</tr>
-                <tr>Poids</tr>
-                <tr>Taille</tr>
-                <tr>Type</tr>  
-                <tr>Pouvoirs</tr> 
-            </thead>
-            <tbody id="tableBody">
-                
-            </tbody>
-        </table>
-</body>
+        
+        <form id="form2" action="POST">
+            <label for="id">numéro de pokédex national</label>
+            <input type="text" id="id">
+            <button type="submit">fetch id</button>  
+        </form>
+       <div>
+        <button type="button" id="btnPrevious"> Pokemon précédent</button>
+           <table>
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Nom</th>
+                       <th>Poids</th>
+                       <th>Taille</th>
+                       <th>Type</th>  
+                       <th>Pouvoirs</th> 
+                    </tr>
+                </thead>
+                <tbody id="tableBody2">
+                    
+                </tbody>
+            </table>
+            <button type="button" id="btnNext"> Pokemon suivant</button>
+        </div>
+        </body>
 </html>
