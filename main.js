@@ -5,6 +5,8 @@ const inputId = document.querySelector("#id");
 
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
+let targetPokemon = null;
+
 async function getPokemon(name) {
   const response = await fetch(BASE_URL + "pokemon/" + name);
   const data = await response.json();
@@ -17,48 +19,55 @@ async function getPokemonById(id) {
   return data;
 }
 
-async function getClosestPokemon(pokemon, order) {
-            const response = await fetch(BASE_URL + "pokemon/" + (pokemon.id + order));
+async function getClosestPokemon(id, order) {
+            const response = await fetch(BASE_URL + "pokemon/" + (id + order));
             const data = await response.json();
             return data;
 }
  
-const selectPokemon = (pokemon)=> {
-    const pokemon = pokemon
+const selectOtherPokemon = ()=> {
     const previous = document.querySelector("#btnPrevious");
     const next = document.querySelector("#btnNext");
     previous.addEventListener("click", async () => { 
-        try {
-            const order =-1;
-            const data = await getClosestPokemon(pokemon, order);
-            const pokemon = storePokemon(data);
-            console.log(pokemon);
-        }catch (error) {
-            console.error("Error fetching Pokemon :", error.message);
-        }   
+        if (targetPokemon.id > 1) {
+            
+            try {
+                
+                const order =-1;
+                const data = await getClosestPokemon(targetPokemon.id, order);
+                targetPokemon = storedPokemon(data);
+                console.log("previous:",targetPokemon);
+            }catch (error) {
+                console.error("Error fetching Pokemon :", error.message);
+            }   
+        }
     })
+
     next.addEventListener("click", async () => { 
-        try {
-            const order = 1;
-            const data = await getClosestPokemon(order);
-            const pokemon = storePokemon(data);
-            console.log(pokemon);
-        }catch (error) {
-            console.error("Error fetching Pokemon :", error.message);
-        }   
+        if (targetPokemon.id < 1025 ) {
+            
+            try {
+                const order = 1;
+                const data = await getClosestPokemon(targetPokemon.id, order);
+                targetPokemon = storedPokemon(data);
+                console.log("next", targetPokemon);
+            }catch (error) {
+                console.error("Error fetching Pokemon :", error.message);
+            }   
+        }
     })
 }
 
-function storePokemon(pokemon) {
+function storedPokemon(pokemon) {
   const name = pokemon.name;
   const weight = pokemon.weight;
   const height = pokemon.height;
   const types = pokemon.types.map(type => type.type.name).join(", ");
   const abilities = pokemon.abilities.map(ability => ability.ability.name).join(", ");
   const id = pokemon.id;
-  displayPokemon(pokemon);
-  selectPokemon(pokemon);
-  return { name, weight, height, types, abilities, id };
+  targetPokemon = { name, weight, height, types, abilities, id };
+  displayPokemon(targetPokemon);
+  return targetPokemon
 }
 
 const displayPokemon = (pokemon) => {
@@ -82,8 +91,8 @@ const findPokemonByName = ()=> {
         if (name !== "") {
             try {
                 const data = await getPokemon(name);
-                const pokemon = storePokemon(data);
-                console.log(pokemon);
+                targetPokemon = storedPokemon(data);
+                console.log(targetPokemon);
                 
                 
             } catch (error) {
@@ -101,8 +110,8 @@ const findPokemonById = () => {
         if (id !== "") {
             try {
                 const data = await getPokemonById(id);
-                const pokemon = storePokemon(data);
-                console.log(pokemon);
+                targetPokemon = storedPokemon(data);
+                console.log(targetPokemon);
                 
                 
             } catch (error) {
@@ -114,3 +123,4 @@ const findPokemonById = () => {
 }
 findPokemonByName();
 findPokemonById();
+selectOtherPokemon();
